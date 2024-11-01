@@ -14,7 +14,11 @@ export const signupCall = async( states: StatesType ): Promise<void | string> =>
             console.log(response.data.error);
         }else if(response.data.acknowledged){
             console.log("Successfully added user");
+            if(response.data.token){
+                localStorage.setItem("username", states.user);
+            }
             return response.data.token;
+            
         }
     }
 

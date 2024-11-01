@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 import Protected from "./Protected";
@@ -18,6 +18,7 @@ const lazyLoad = (Component: React.LazyExoticComponent<React.FC>) => (
 const router = createBrowserRouter([
     {
         path: '/',
+        element: <Navigate to="/protected/chat" replace />,
         errorElement: lazyLoad(Error404)
         
     },

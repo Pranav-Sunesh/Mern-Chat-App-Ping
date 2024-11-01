@@ -9,7 +9,7 @@ export const loginCall = async(req: Request, res: Response) => {
     
     try {
         const user = await users.find({username: username}).toArray();
-        const userId = user[0].userId;
+        const userId: string = user[0].userId;
         const userPassword = user[0].password;
         const credValid = passCompare(password, userPassword);
         if(credValid){

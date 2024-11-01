@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/toaster";
 import Hero from "./Hero";
 import Navbar from "./Navbar";
 
@@ -8,7 +9,7 @@ const Chat = () => {
       >
         <Navbar />
         <Hero />
-
+        <Toaster />
     </div>
   );
 };

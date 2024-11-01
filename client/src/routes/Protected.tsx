@@ -6,7 +6,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const Protected = () => {
   
-  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const [cookie, _setCookie, _removeCookie] = useCookies(['token']);
   const token = cookie.token;
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
@@ -36,7 +36,7 @@ const Protected = () => {
   if(isAuth){
     return <Outlet />
   }else{
-    return <Navigate to={'/login'} />
+    return <Navigate to={'/login'} replace/>
   }
 };
 

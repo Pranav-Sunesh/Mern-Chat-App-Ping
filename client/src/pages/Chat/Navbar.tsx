@@ -1,43 +1,20 @@
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import Profilesection from "./Profilesection";
-import { logout } from "@/utils/Logout";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
-
+import DropdownMenu from "@/components/Dropdownmenu";
+import Addmodal from "@/components/Addmodal";
+import { useAppSelector } from "@/hooks/reduxHooks";
+import RequestModal from "@/components/RequestModal";
 
 const Navbar = () => {
 
-  const [cookies, setCookie, removeCookie] = useCookies(['token']);
-  const navigate = useNavigate();
+  const addModal: boolean = useAppSelector(state => state.chat.addModal);
+  const requestModal: boolean = useAppSelector(state => state.chat.requestModal);
 
   return (
     <div 
         className="w-full h-[15%] flex justify-end items-center"
         >
-          
-
-            <DropdownMenu>
-                <DropdownMenuTrigger className="w-1/6 h-1/2 flex focus:outline-none">
-                  <Profilesection />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuLabel>Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Requests</DropdownMenuItem>
-                  <DropdownMenuItem>Add Friends</DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() =>{logout(navigate, removeCookie)}}
-                    >Logout</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+          <DropdownMenu />
+          {addModal && <Addmodal />}
+          {requestModal &&  <RequestModal />}
     </div>
   );
 };
