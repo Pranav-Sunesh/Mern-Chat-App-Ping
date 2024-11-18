@@ -1,4 +1,5 @@
 import CardForm from "@/components/CardForm";
+import { Toaster } from "@/components/ui/toaster";
 
 
 const Login = () => {
@@ -15,7 +16,7 @@ const Login = () => {
                 >
                     <CardForm formType="login"/>
             </div>
-            
+            <Toaster />
     </div>
   );
 };

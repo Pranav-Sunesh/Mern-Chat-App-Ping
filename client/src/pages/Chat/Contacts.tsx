@@ -1,14 +1,37 @@
 import Profilepic from "@/components/Profilepic";
+import { useAppDispatch, useAppSelector} from "@/hooks/reduxHooks";
+import { setMessages, setSelectedChat } from "@/redux/slices/chatSlice";
+import { getChats } from "@/services/api/chats/getChats";
+import { getMessages } from "@/services/api/chats/getMessages";
+import { joinRoom } from "@/services/socket/socket";
+import { useEffect } from "react";
 
 interface PropType{
-    key: number,
     contacts: string
+    lastMessage: string
+    userId: string
+    messagesIds: string[]
 }
 
-const Contacts = ( { contacts }: PropType ) => {
+const Contacts = ( { contacts , userId, lastMessage }: PropType ) => {
+
+    const dispatch = useAppDispatch();
+    
+    const selectContact = async() => {
+        const chats = await getChats(localStorage.getItem('username'));
+        const selectedChats = chats.find((element: any) => element._id === userId);
+        const messagesIds = selectedChats.messages;
+        const messages = await getMessages(messagesIds);
+        console.log(selectedChats);
+        dispatch(setMessages(messages));
+        dispatch(setSelectedChat(userId));
+        joinRoom(selectedChats._id);
+    }
+
   return (
     <div
-        className="w-full h-20 border flex"
+        onClick={selectContact}
+        className="w-full h-20 border flex hover:bg-gray-50 active:bg-gray-100 transition"
         >
             <div
                 className="h-full w-1/5 flex justify-center items-center"
@@ -27,7 +50,7 @@ const Contacts = ( { contacts }: PropType ) => {
                     <div
                         className="h-1/2 flex items-center text-sm"
                         >
-                            You: Msg
+                            {lastMessage}
                     </div>
             </div>
         

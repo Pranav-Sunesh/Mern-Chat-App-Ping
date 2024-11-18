@@ -17,10 +17,11 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { setConfirmPassword, setEmail, setFirstName, setLastName, setPassword, setUser } from "@/redux/slices/authSlice";
 
 import { loginCall } from "@/services/api/auth/login";
-import { CardProps, StatesType } from "@/@types/auth";
+import { CardProps , StatesType } from "@/@types";
 import { signupCall } from "@/services/api/auth/signupCall";
 
 import { useCookies } from "react-cookie";
+import { useToast } from "@/hooks/use-toast";
 
 
 const CardForm = ({ formType }: CardProps) => {
@@ -36,7 +37,7 @@ const CardForm = ({ formType }: CardProps) => {
 
   //Cookie
 
-  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const [_cookie, setCookie, _removeCookie] = useCookies(['token']);
 
   //Dispatch
 
@@ -45,6 +46,7 @@ const CardForm = ({ formType }: CardProps) => {
   //Handle Submit
 
   const navigate = useNavigate();
+  const { toast } = useToast()
   
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
@@ -57,20 +59,31 @@ const CardForm = ({ formType }: CardProps) => {
         lastName: lastName,
     }
     if(formType === "signup"){
-        const token: string | void = await signupCall(states);
-        setCookie('token', token, {
-            secure: true, 
-            sameSite: 'none'
-        });
-        navigate('/protected/chat');
+        const response: any = await signupCall(states, toast);
+        const token = response?.token;
+        if(token){
+            setCookie('token', token, {
+                secure: true, 
+                sameSite: 'none'
+            });
+            navigate('/protected/chat');
+        }else{
+            console.log(response.error);
+        }
         
     }else{
-        const token: string = await loginCall(states);
-        setCookie('token', token,{
-            secure: true,
-            sameSite: "none"
-        });
-        navigate('/protected/chat');
+        const response:any = await loginCall(states, toast);
+        const token = response.token;
+        if(token){
+            setCookie('token', token,{
+                secure: true,
+                sameSite: "none"
+            });
+            navigate('/protected/chat');
+        }else{
+            console.log(response.error);
+        }
+        
     }
   }
 
@@ -154,11 +167,7 @@ const CardForm = ({ formType }: CardProps) => {
             
         </CardContent>
         <CardFooter className="flex justify-between">
-            {/* 
-                <a
-                    className="hover:underline transition cursor-pointer"
-                    >{formType === 'signup'?"Login": "Signup"}
-                </a> */}
+            
             <NavLink to={formType === 'signup'? "/login" : "/signup"}>
             <Button 
                 type="button"

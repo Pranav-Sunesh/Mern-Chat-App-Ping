@@ -91,3 +91,9 @@
 .dot:nth-child(3) {
   animation-delay: 2s;
 }
+
+#request-dialog, #chat-body{
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+

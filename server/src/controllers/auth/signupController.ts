@@ -1,8 +1,8 @@
 import { Request , Response } from "express";
 import { users } from "../../config/db";
 import { passwordHash } from "../../services/hashing/paswordHash";
-import { uniqueIdGen } from "../../services/hashing/uniqueIdGen";
-import { jwtSigning } from "../../services/hashing/jwtSigning";
+import { uniqueIdGen } from "../../services/uniqueIdGen";
+import { jwtSigning } from "../../services/jwtSigning";
 
 
 export const signupCall = async(req: Request, res: Response) => {
@@ -19,7 +19,7 @@ export const signupCall = async(req: Request, res: Response) => {
             res.status(200).json({acknowledged: result.acknowledged, token: token});
         }else{
             console.log("User already exist")
-            res.json({error: "User already exist"});
+            res.status(409).json({error: "User already exist"});
         }
     } catch (error) {
         console.log(error);

@@ -12,24 +12,28 @@ import {
   import { useCookies } from "react-cookie";
   import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { popAddModal, popRequestModal } from "@/redux/slices/chatSlice";
+import { popAddModal, popRequestModal, setRequests } from "@/redux/slices/chatSlice";
+import { getRequest } from "@/services/api/chats/getRequest";
 
 const Dropdownmenu = () => {
 
     const [_cookies, _setCookie, removeCookie] = useCookies(['token']);
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    const dispatch =useAppDispatch();
   return (
-    
         <DropdownMenu >
-                <DropdownMenuTrigger className="w-1/6 h-1/2 flex focus:outline-none">
+                <DropdownMenuTrigger className=" h-1/2 flex focus:outline-none">
                   <Profilesection />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={() => dispatch(popRequestModal(true))}
+                  onClick={async() =>{
+                    dispatch(popRequestModal(true))
+                    const request = await getRequest(localStorage.getItem("username"));
+                    dispatch(setRequests(request))
+                  }}
                     >Requests</DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => dispatch(popAddModal(true))}>
@@ -39,7 +43,7 @@ const Dropdownmenu = () => {
                     onClick={() =>{logout(navigate, removeCookie)}}
                     >Logout</DropdownMenuItem>
                 </DropdownMenuContent>
-              </DropdownMenu>
+        </DropdownMenu>
   );
 };
 
