@@ -1,10 +1,13 @@
-import { useAppSelector } from "@/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { setNewMessage } from "@/redux/slices/chatSlice";
+import { socketReceiveMessage } from "@/services/socket/socket";
 import { useEffect, useRef } from "react";
 
 const Chatsecbody = () => {
 
     const messages = useAppSelector(state => state.chat.messages)!;
     const chatBodyRef = useRef<HTMLDivElement | null>(null);
+    const dispatch = useAppDispatch();
 
     const scrollToBottom = () => {
       if(chatBodyRef && chatBodyRef.current){
@@ -13,7 +16,16 @@ const Chatsecbody = () => {
     }
 
     useEffect(() => {
+      const callback = ({ content, sender, timestamp }: any) => {
+        dispatch(setNewMessage( {sender: sender, content: content, timestamp: timestamp} ))
+      }
+
+      socketReceiveMessage(callback);
+    }, [])
+
+    useEffect(() => {
       scrollToBottom();
+      console.log(messages);
     },[messages])
     
   return (
@@ -23,7 +35,7 @@ const Chatsecbody = () => {
         id="chat-body"
         className="w-full h-[75%] flex-col-reverse space-y-6 overflow-y-scroll"
         >
-            {messages.map((message: any, index) => (
+            {messages.map((message: any, index: number) => (
                 <div 
                   className={`w-full flex items-center h-10 ${message.sender === localStorage.getItem('username')? "justify-end": "justify-start"}`}
                   key={index}

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useAppSelector } from "@/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
+import { setNewMessage } from "@/redux/slices/chatSlice";
 import { sendMessage } from "@/services/api/chats/sendMessage";
 import { useState } from "react";
 
@@ -8,11 +9,14 @@ const Chatsecfooter = () => {
 
   const [message, setMessage] = useState<string>('');
   const selectedChat = useAppSelector(state => state.chat.selectedChat);
+  const dispatch = useAppDispatch();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setMessage('');
     const userName = localStorage.getItem('username');
-    sendMessage(e, selectedChat, userName, message);
+    const timestamp = new Date().toISOString();
+    dispatch(setNewMessage({ sender: userName, content: message, timestamp: timestamp}));
+    sendMessage(e, selectedChat, userName, message, timestamp);
   }
 
 

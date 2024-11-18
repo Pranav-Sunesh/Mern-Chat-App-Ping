@@ -8,7 +8,7 @@ interface chatState {
     requests: string[] | []
     selectedChat: string
     chats: ContactType[] | [] | null
-    messages: [] | string[] | null
+    messages: any
     
 }
 
@@ -46,10 +46,13 @@ export const chatSlice = createSlice({
         },
         setSelectedChat: (state, action: PayloadAction<string>) => {
             state.selectedChat = action.payload;
+        },
+        setNewMessage: (state, action: PayloadAction<any>) => {
+            state.messages = [...state.messages? state.messages: [], action.payload];
         }
     }
 })
 
-export const { popAddModal, popRequestModal , setRequests, setChats, setMessages, setSelectedChat, setUserId} = chatSlice.actions;
+export const { popAddModal, popRequestModal , setRequests, setChats, setMessages, setSelectedChat, setUserId, setNewMessage} = chatSlice.actions;
 
 export default chatSlice.reducer;

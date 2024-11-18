@@ -25,5 +25,9 @@ io.on("connection", (socket) => {
     socket.on('joinRoom', (msg) => {
         console.log("Joining room: ", msg);
         socket.join(msg);
+    });
+    
+    socket.on('send message', (msg) => {    
+        socket.to(msg.roomId).emit('receive message', { content: msg.content, sender: msg.sender, timestamp: msg.timestamp });
     })
 })

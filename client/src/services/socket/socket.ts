@@ -17,6 +17,10 @@ export const socketClose = () => {
     socket.close();
 } 
 
-export const socketSendMessage = (message: string) => {
+export const socketSendMessage = (message: any) => {
     socket.emit('send message', message);
+}
+
+export const socketReceiveMessage = (callback: any) => {
+    socket.on('receive message', callback);
 }
