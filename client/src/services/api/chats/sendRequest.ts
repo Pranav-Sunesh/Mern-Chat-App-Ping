@@ -1,37 +1,25 @@
-import { popAddModal } from "@/redux/slices/chatSlice";
-import { Dispatch } from "@reduxjs/toolkit";
+
+import { sendRequestReturnType } from "@/@types";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { title } from "process";
 
 
-export const sendRequest = async(e: React.FormEvent, dispatch: Dispatch, toast: any, username: string): Promise<void> => {
-    e.preventDefault();
-    dispatch(popAddModal(false));
+
+export const sendRequest = async(username: string): Promise<sendRequestReturnType> => {
     
     try {
         const response: AxiosResponse = await axios.post("http://localhost:5000/chat/sendrequest", {username: username , sender: localStorage.getItem('username')});
-        {
-            toast({
-                title: "Request send",
-                description: username,
-                duration: 1500
-            });
+        if(response.status === 204){
+            return {data: "User already a friend", type: "default"};
         }
+        return {data: "Request send", type: "default"}
     } catch (error) {
         const axiosError = error as AxiosError;
         const status = axiosError?.response?.status;
         if(status === 404){
-            toast({
-                title: "User not Found",
-                variant: 'destructive',
-                duration: 1500
-            });
+            return {data: 'User not found', type: 'destructive'};
         }else if(status === 409){
-            toast({
-                title: "Request already send",
-                variant: 'destructive',
-                duration: 1500
-            })
+            return {data: 'Request already send', type: 'destructive'};
         }
+        return {data: 'Unexpected Error occured', type: "destructive"}
         }
 }       

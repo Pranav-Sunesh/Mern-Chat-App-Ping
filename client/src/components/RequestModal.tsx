@@ -8,12 +8,13 @@ import {
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
 import { popRequestModal } from "@/redux/slices/chatSlice";
 import Requestsection from "./Requestsection";
+import { RequestSectionType } from "@/@types";
   
 
 const RequestModal = () => {
     
     const requestModal: boolean = useAppSelector(state => state.chat.requestModal);
-    const requests: string[] | [] = useAppSelector(state => state.chat.requests);
+    const requests: RequestSectionType[] | [] = useAppSelector(state => state.chat.requests);
     const dispatch = useAppDispatch();
     
 
@@ -31,7 +32,7 @@ const RequestModal = () => {
             <div className="flex justify-center items-center"> No requests</div>
             :
             requests.map((request, index) => (
-              <Requestsection key={index} requesterName={request} />
+              <Requestsection key={index} requester={request} />
           ))
           }
         </div>

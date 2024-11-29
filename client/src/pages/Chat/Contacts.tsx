@@ -1,31 +1,33 @@
+import { ContactType, LastMessageType, ParticipantType } from "@/@types";
 import Profilepic from "@/components/Profilepic";
 import { useAppDispatch, useAppSelector} from "@/hooks/reduxHooks";
-import { setMessages, setSelectedChat } from "@/redux/slices/chatSlice";
+import { setIsTyping, setMessageInput, setMessages, setSelectedChat, setSelectedChatName } from "@/redux/slices/chatSlice";
 import { getChats } from "@/services/api/chats/getChats";
 import { getMessages } from "@/services/api/chats/getMessages";
-import { joinRoom } from "@/services/socket/socket";
-import { useEffect } from "react";
 
 interface PropType{
     contacts: string
-    lastMessage: string
+    lastMessage: LastMessageType
     userId: string
-    messagesIds: string[]
+    profilePicURL: string
 }
 
-const Contacts = ( { contacts , userId, lastMessage }: PropType ) => {
+const Contacts = ( { contacts , userId, lastMessage , profilePicURL }: PropType ) => {
 
     const dispatch = useAppDispatch();
-    
+    const userDetails = useAppSelector(state => state.chat.userDetails);
+
     const selectContact = async() => {
+        dispatch(setMessageInput(''));
+        dispatch(setIsTyping(false));
         const chats = await getChats(localStorage.getItem('username'));
-        const selectedChats = chats.find((element: any) => element._id === userId);
-        const messagesIds = selectedChats.messages;
-        const messages = await getMessages(messagesIds);
+        const selectedChats: ContactType = chats.find((element: any) => element._id === userId);
         console.log(selectedChats);
+        dispatch(setSelectedChat(selectedChats));
+        const messagesIds = selectedChats.messages;
+        const messages = await getMessages(messagesIds, [userDetails?._id!, ...selectedChats.participants.map((participant: ParticipantType) => participant.id)]);  //The array conatin all the participants of the chats
         dispatch(setMessages(messages));
-        dispatch(setSelectedChat(userId));
-        joinRoom(selectedChats._id);
+        dispatch(setSelectedChatName(contacts));
     }
 
   return (
@@ -36,21 +38,21 @@ const Contacts = ( { contacts , userId, lastMessage }: PropType ) => {
             <div
                 className="h-full w-1/5 flex justify-center items-center"
                 >
-                    <Profilepic />  
+                    <Profilepic width="10" height="10" profilePicURL={profilePicURL}/>  
             </div>
             <div
                 id="contact-info"
                 className="w-4/5 h-full"
                 >
                     <div
-                        className="w-full h-1/2 flex items-end"
+                        className="w-full h-2/3 flex items-end text-lg" 
                         >
                             {contacts}
                         </div>  
                     <div
-                        className="h-1/2 flex items-center text-sm"
+                        className="h-1/3 flex items-center text-xs"
                         >
-                            {lastMessage}
+                            {lastMessage.sender === localStorage.getItem('username')? "You": lastMessage.sender} {lastMessage.content? ":": ""} {lastMessage.content}
                     </div>
             </div>
         

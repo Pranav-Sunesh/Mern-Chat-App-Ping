@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
   import Profilesection from "../pages/Chat/Profilesection";
-  import { logout } from "@/utils/Logout";
+  import { logout } from "@/utils/auth/Logout";
 
   import { useCookies } from "react-cookie";
   import { useNavigate } from "react-router-dom";
@@ -42,6 +42,11 @@ const Dropdownmenu = () => {
                   <DropdownMenuItem
                     onClick={() =>{logout(navigate, removeCookie)}}
                     >Logout</DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {navigate('/protected/profile')}}
+                    >
+                      Profile
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
         </DropdownMenu>
   );

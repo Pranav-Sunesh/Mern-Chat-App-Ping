@@ -22,6 +22,7 @@ import { signupCall } from "@/services/api/auth/signupCall";
 
 import { useCookies } from "react-cookie";
 import { useToast } from "@/hooks/use-toast";
+import { setUserDetails } from "@/redux/slices/chatSlice";
 
 
 const CardForm = ({ formType }: CardProps) => {
@@ -34,6 +35,7 @@ const CardForm = ({ formType }: CardProps) => {
   const firstName = useAppSelector(state => state.auth.firstName);
   const lastName = useAppSelector(state => state.auth.lastName);
   const email = useAppSelector(state => state.auth.email);
+
 
   //Cookie
 
@@ -66,7 +68,7 @@ const CardForm = ({ formType }: CardProps) => {
                 secure: true, 
                 sameSite: 'none'
             });
-            navigate('/protected/chat');
+            navigate('/protected/profile/edit');
         }else{
             console.log(response.error);
         }

@@ -28,6 +28,16 @@ io.on("connection", (socket) => {
     });
     
     socket.on('send message', (msg) => {    
-        socket.to(msg.roomId).emit('receive message', { content: msg.content, sender: msg.sender, timestamp: msg.timestamp });
+        socket.to(msg.roomId).emit('receive message', { chatId: msg.roomId, content: msg.content, sender: msg.sender, timestamp: msg.timestamp });
+    })
+
+    socket.on('typing', (msg) => {
+        console.log(msg);
+        socket.to(msg.chatId).emit('typing listener', msg);  
+    })
+    
+    socket.on('receive request', (msg) => {
+        console.log(msg);
+        socket.to(msg).emit('receive request response');
     })
 })

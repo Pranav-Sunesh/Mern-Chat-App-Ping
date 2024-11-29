@@ -1,15 +1,19 @@
 import pfp from "../assets/avatar/no pfp.jpg"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
+interface ProfilePicType{
+  profilePicURL: string
+  width: string
+  height: string
+}
 
-const Profilepic = () => {
+const Profilepic = ( { profilePicURL , width, height }: ProfilePicType ) => {
   return (
-    <div>
-        <Avatar>
-            <AvatarImage src={pfp} />
-            <AvatarFallback>CN</AvatarFallback>
+        <Avatar
+          className={`w-${width} h-${height}`}> 
+            <AvatarImage src={profilePicURL? profilePicURL: pfp} />
+            <AvatarFallback>pfp</AvatarFallback>
         </Avatar>
-    </div>
   );
 };
 

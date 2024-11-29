@@ -4,7 +4,7 @@ import { users } from "../../config/db";
 export const getUsers = async(req: Request, res: Response): Promise<void> => {
     const { username } = req.params;
 
-    const userDetails = await users.find({username: username}).toArray();
+    const userDetails = await users.findOne({username: username});
 
-    res.json(userDetails[0]._id); 
+    res.json({userDetails: {_id: userDetails?._id, userName: userDetails?.username, profilePicURL: userDetails?.profilePicURL, bio: userDetails?.bio}}); 
 }

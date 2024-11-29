@@ -1,32 +1,31 @@
-import { Toaster } from "@/components/ui/toaster";
+
 import Hero from "./Hero";
 import Navbar from "./Navbar";  
 import { useEffect } from "react";
 import { getUser } from "@/services/api/chats/getUser";
-import { useAppDispatch } from "@/hooks/reduxHooks";
-import { setUserId } from "@/redux/slices/chatSlice";
-import { joinRoom } from "@/services/socket/socket";
+import { useAppDispatch,  } from "@/hooks/reduxHooks";
+import { setUserDetails,  } from "@/redux/slices/chatSlice";
 
 
 const Chat = () => {
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {  
+  useEffect(() => {  
 
-    
-  //   // getUser(localStorage.getItem('username'))
-  //   //   .then((userId) =>joinRoom(userId));
+      getUser(localStorage.getItem('username'))
+        .then((userDetails) => dispatch(setUserDetails(userDetails)));
 
-  // }, [])
+  }, [])
+
+  
 
   return (
     <div
-      className="w-screen h-screen bg-gradient-to-br from-green-50 to-green-200"
+      className="w-screen h-screen bg-gradient-to-br from-[#C6B38E] to-[#9A9B73]"
       >
         <Navbar />
         <Hero />
-        <Toaster />
     </div>
   );
 };

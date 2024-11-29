@@ -1,5 +1,5 @@
 import { Request , Response } from "express";
-import { users } from "../../config/db";
+import { chats, users } from "../../config/db";
 import { passwordHash } from "../../services/hashing/paswordHash";
 import { uniqueIdGen } from "../../services/uniqueIdGen";
 import { jwtSigning } from "../../services/jwtSigning";
@@ -13,9 +13,11 @@ export const signupCall = async(req: Request, res: Response) => {
         if(userName.length == 0){
             const hashed_password = passwordHash(password);
             const uniqueId = uniqueIdGen();
-            const result = await users.insertOne({ userId: uniqueId, username: user, password: hashed_password, email: email, firstName: firstName, lastName: lastName});
+            const result = await users.insertOne({ userId: uniqueId, username: user, password: hashed_password, email: email, firstName: firstName, lastName: lastName, bio: '', profilePicPublicId: uniqueId, profilePicURL: ''});
             const token = jwtSigning(uniqueId, user);
             console.log({acknowledged: result.acknowledged, token: token});
+            const userDetailsArray = await chats.find({username: user}).toArray();
+            const userDetails = userDetailsArray[0];
             res.status(200).json({acknowledged: result.acknowledged, token: token});
         }else{
             console.log("User already exist")

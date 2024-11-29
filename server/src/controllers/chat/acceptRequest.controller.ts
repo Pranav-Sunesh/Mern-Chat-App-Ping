@@ -1,10 +1,18 @@
 import { Request, Response } from "express";
-import { chats, messages, requests } from "../../config/db";
+import { chats, messages, requests, users } from "../../config/db";
 
 export const acceptRequest = async(req: Request, res: Response) => {
     const { username, requesterName } = req.body;
     try {
-        const removeRequest = await requests.updateOne({user: username}, {$pull: {request: requesterName}});
+        //Pending change the name with objectId
+
+        
+
+        const receiverId = await users.findOne({username: username}).then(receiver => receiver?._id)
+        const requesterId = await users.findOne({username: requesterName}).then(requester => requester?._id);
+
+        await requests.updateOne({user: receiverId}, {$pull: {request: requesterId}});
+        await requests.updateOne({user: requesterId}, {$pull: {request: receiverId}});
 
         // {
         //     id,
@@ -22,7 +30,7 @@ export const acceptRequest = async(req: Request, res: Response) => {
         //     timestamp,
 
         // }
-        const { insertedId } = await chats.insertOne({type: 'personal', participants: [username, requesterName], messages: [], lastMessage: '' ,updatedTimestamp: new Date()});
+        const { insertedId } = await chats.insertOne({type: 'personal', participants: [receiverId, requesterId], messages: [], lastMessage: '' ,updatedTimestamp: new Date()});
         res.json("success");
     } catch (error) {
         console.log(error);

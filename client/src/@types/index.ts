@@ -11,8 +11,11 @@ export type StatesType = {
     lastName: string
 }
 
-export type RequestSectionType = {
-    requesterName: string
+export type ParticipantType = {
+    id: string,
+    name: string,
+    profilePicURL: string,
+    bio: string
 }
 
 export type ContactType = {
@@ -20,11 +23,32 @@ export type ContactType = {
     type: string
     updatedTimestamp: string
     messages: string[]
-    participants: string[]
-    lastMesssage: string
+    participants: ParticipantType[]
+    lastMessage: {sender: string, content: string}
 }
 
 export type JoinRoomType = {
     senderId: string,
     receiverId: string
 }
+export type LastMessageType = {
+    sender: string
+    content: string
+}
+
+export type UserDetailsType = {
+    _id: string
+    userName: string
+    profilePicURL: string
+    bio: string
+}
+
+export type sendRequestReturnType = {
+    data: string, 
+    type: 'default' | 'destructive'
+}
+
+export type RequestSectionType = {
+    _id: string, 
+    username: string
+} 

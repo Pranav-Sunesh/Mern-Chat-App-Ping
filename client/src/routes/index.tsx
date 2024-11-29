@@ -3,11 +3,14 @@ import { lazy, Suspense } from "react";
 
 import Protected from "./Protected";
 import Loading from "@/pages/Loading";
+import Layout from "@/Layout";
 
 const Error404 = lazy(() => import('../pages/Error404'));
 const Chat = lazy(() => import('../pages/Chat'));
 const Login = lazy(() => import('../pages/Login'));
 const Signup = lazy(() => import('../pages/Signup'));
+const Profile = lazy(() => import('../pages/Profile'));
+const ProfileEdit = lazy(() => import('../pages/ProfileEdit'));
 
 const lazyLoad = (Component: React.LazyExoticComponent<React.FC>) => (
     <Suspense fallback={<Loading />}>
@@ -23,14 +26,29 @@ const router = createBrowserRouter([
         
     },
     {
-        path: '/protected',
-        element: <Protected />,
+        path: '/',
+        element: <Layout />,
         children: [
             {
-                path: '/protected/chat',
-                element: lazyLoad(Chat)
+                path: '/protected',
+                element: <Protected />,
+                children: [
+                    {
+                        path: '/protected/chat',
+                        element: lazyLoad(Chat)
+                    },
+                    {
+                        path: 'profile',
+                        element: lazyLoad(Profile)
+                    },
+                    {
+                        path: 'profile/edit',
+                        element: lazyLoad(ProfileEdit)
+                    }
+                ]
             }
         ]
+
     },
     {
         path: '/login',

@@ -1,12 +1,12 @@
 import Loading from "@/pages/Loading";
 import axios from "axios";
-import {  useLayoutEffect, useState } from "react";
+import {  useEffect, useLayoutEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Navigate, Outlet } from "react-router-dom";
 
 const Protected = () => {
   
-  const [cookie, _setCookie, _removeCookie] = useCookies(['token']);
+  const [cookie, _setCookie, removeCookie] = useCookies(['token']);
   const token = cookie.token;
   const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
@@ -28,6 +28,12 @@ const Protected = () => {
 
     verifyToken();
   },[]) 
+
+  useEffect(() => {
+    if(isAuth === false){
+      removeCookie('token');
+    }
+  }, [isAuth]);
 
   if(isAuth === null){
     return <div><Loading /></div>

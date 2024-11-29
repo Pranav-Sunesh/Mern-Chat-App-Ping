@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { sendRequest } from "@/services/api/chats/sendRequest";
 import { DialogDescription } from "@radix-ui/react-dialog";
+import { sendRequestReturnType } from "@/@types";
   
 
 
@@ -24,7 +25,17 @@ const Addmodal = () => {
 
     const handleSubmit = async(e: React.FormEvent): Promise<void> => {
         setUsername('');
-        await sendRequest(e, dispatch, toast, username);
+        e.preventDefault();
+        dispatch(popAddModal(false));
+        if(username !== localStorage.getItem('username')){
+            const response: sendRequestReturnType = await sendRequest(username);
+            console.log("working");
+            toast({
+                title: response.data,
+                variant: response.type,
+                duration: 1500
+            });
+        }
     }
 
   return (
