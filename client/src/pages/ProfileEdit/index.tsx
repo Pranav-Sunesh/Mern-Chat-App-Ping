@@ -91,13 +91,13 @@ const ProfileEdit = () => {
 
   return (
     <div 
-        className="w-screen h-screen flex justify-center bg-gradient-to-br from-[#C6B38E] to-[#9A9B73] ">
+        className="w-screen h-screen flex justify-center bg-gradient-to-l from-[#30cfd0] to-[#330867] ">
             <div
                 className="w-1/2 space-y-10 mt-20"
                 >
                     <div>
                         <p
-                            className='text-3xl text-[#424B54]'>
+                            className='text-3xl text-white'>
                                 Edit Profile
                             </p>
                     </div>
@@ -118,7 +118,7 @@ const ProfileEdit = () => {
                                     </button>
                                     {userDetails?.profilePicURL && <button
                                         onClick={removeProfilePic}
-                                        className='w-10 h-10 bg-red-400 rounded text-white hover:bg-red-500 active:bg-red-300'>
+                                        className='w-10 h-10 bg-red-400 rounded-sm text-white hover:bg-red-500 active:bg-red-300'>
                                             <i className="fa-solid fa-trash"></i>
                                     </button>}
                                     <input 
@@ -143,7 +143,8 @@ const ProfileEdit = () => {
                         </div>
                         <div
                             className='space-y-3'>
-                            <Label>
+                            <Label
+                                className='text-white'>
                                 Bio:
                             </Label>
                             <Textarea 

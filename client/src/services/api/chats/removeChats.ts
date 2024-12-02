@@ -1,3 +1,4 @@
+import { deleteChat } from "@/services/socket/socket";
 import axios, { AxiosError, AxiosResponse } from "axios"
 interface ReturnType{
     data: string
@@ -11,6 +12,7 @@ export const removeChats = async(chatId: string): Promise<ReturnType> => {
                 chatId: chatId
             }
         });
+        deleteChat(chatId); 
         return { data: response.data, variant: 'default' }
 
     } catch (error) {

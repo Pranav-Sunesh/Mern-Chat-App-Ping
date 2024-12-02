@@ -16,6 +16,8 @@ interface chatState {
     messageInput: string
     userDetails: UserDetailsType | null
     selectedChatId: string
+    addNewGroupModal: boolean,
+    groupParticipants: string[]
 }
 
 const initialState: chatState = {
@@ -31,6 +33,8 @@ const initialState: chatState = {
     isTyping: false,
     selectedChatName: '',
     selectedChatId: '',
+    addNewGroupModal: false,
+    groupParticipants: []
 }
 
 export const chatSlice = createSlice({
@@ -55,7 +59,7 @@ export const chatSlice = createSlice({
         setChats: (state, action: PayloadAction<any>) => {
             state.chats = action.payload;
         },
-        setMessages: (state, action: PayloadAction<string[] | []>) => {
+        setMessages: (state, action: PayloadAction<string[] | [] | null>) => {
             state.messages = action.payload;
         },
         setSelectedChat: (state, action: PayloadAction<ContactType>) => {
@@ -105,6 +109,15 @@ export const chatSlice = createSlice({
         }, 
         setSelectedChatId: (state, action: PayloadAction<string>) => {
             state.selectedChatId = action.payload;
+        },
+        setGroupModal: (state, action: PayloadAction<boolean>) => {
+            state.addNewGroupModal = action.payload;
+        },
+        addGroupParticipants: (state, action: PayloadAction<string>) => {
+            state.groupParticipants.push(action.payload);
+        },
+        removeGroupParticipants: (state, action: PayloadAction<string>) => {
+            state.groupParticipants = state.groupParticipants.filter((participant) => participant !== action.payload);
         }
     }
 })
@@ -124,6 +137,9 @@ export const { popAddModal,
                 setSelectedChatName,
                 setMessageInput, 
                 setSelectedChatId,
-                setUserDetails} = chatSlice.actions;
+                setUserDetails,
+                setGroupModal,
+                addGroupParticipants,
+                removeGroupParticipants } = chatSlice.actions;
 
 export default chatSlice.reducer;

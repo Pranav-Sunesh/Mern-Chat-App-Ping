@@ -33,10 +33,21 @@ export const typingListener = (callback: any) => {
     socket.on('typing listener', callback);
 }
 
-export const receiveRequest = (userId: string) => {
+export const receiveRequest = (userId: string| string[]) => {
     socket.emit('receive request', userId);
 }
 
 export const receiveRequestResponse = (callback: () => void) => {
     socket.on('receive request response', callback);
+}
+
+export const leaveRoom = (chatId: string) => {
+    socket.emit('leave room', chatId);
+}
+
+export const deleteChat = (chatId: string) => {
+    socket.emit('delete chat', chatId);
+}
+export const deleteChatListener = (callback: () => void) => {
+    socket.on('delete chat listener', callback)
 }

@@ -11,6 +11,8 @@ import { profileUpdate } from "../controllers/chat/profileUpdate.controllers";
 import { upload } from "../config/multer.config";
 import { deleteProfilePicture } from "../controllers/chat/deleteProfilePicture.controllers";
 import { deleteChats } from "../controllers/chat/deleteChat.controllers";
+import { createGroup } from "../controllers/chat/createGroup.controllers";
+import { removeParticipant } from "../controllers/chat/removeParticipant.controllers";
 
 const router: Router = Router();
 
@@ -25,6 +27,8 @@ router.post("/sendmessage",sendMessage);
 router.post('/getmessages', getMessages);
 router.post('/profile/update', upload.single('image'), profileUpdate);
 router.delete('/profile/deletepfp', deleteProfilePicture);
-router.delete('/deletechat', deleteChats)
+router.delete('/deletechat', deleteChats);
+router.post('/create/group', upload.single('image'), createGroup);
+router.delete('/delete/participant', removeParticipant)
 
 export default router;

@@ -4,7 +4,8 @@ import Navbar from "./Navbar";
 import { useEffect } from "react";
 import { getUser } from "@/services/api/chats/getUser";
 import { useAppDispatch,  } from "@/hooks/reduxHooks";
-import { setUserDetails,  } from "@/redux/slices/chatSlice";
+import { setMessages, setUserDetails,  } from "@/redux/slices/chatSlice";
+import { joinRoom } from "@/services/socket/socket";
 
 
 const Chat = () => {
@@ -14,15 +15,25 @@ const Chat = () => {
   useEffect(() => {  
 
       getUser(localStorage.getItem('username'))
-        .then((userDetails) => dispatch(setUserDetails(userDetails)));
+        .then((userDetails) => {
+          dispatch(setUserDetails(userDetails));
+          joinRoom(userDetails?._id);
+        });
 
+        addEventListener("keydown", (e) => {
+          if(e.key === 'Escape'){
+            dispatch(setMessages(null));
+          }
+        })
+
+        dispatch(setMessages(null));
   }, [])
 
   
 
   return (
     <div
-      className="w-screen h-screen bg-gradient-to-br from-[#C6B38E] to-[#9A9B73]"
+      className="w-screen h-screen bg-gradient-to-l from-[#30cfd0] to-[#330867]"
       >
         <Navbar />
         <Hero />

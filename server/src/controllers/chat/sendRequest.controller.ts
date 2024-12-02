@@ -16,7 +16,7 @@ export const sendRequest = async(req: Request ,res: Response): Promise<Response 
         }
 
         //Does the request already exist
-        const isRequested = await requests.find({$and: [{user: username}, {request: sender}]}).toArray();
+        const isRequested = await requests.find({$and: [{user: receiverId}, {request: senderId}]}).toArray();
         if(isRequested.length !== 0){
             return res.status(409).json({error: 'Request already send'});
         }

@@ -22,13 +22,16 @@ const Profile = () => {
       .then(value => dispatch(setChats(value)));
   }, []);
 
+
+
   const ProfileEdit = () => {
     navigate('/protected/profile/edit')
   }
 
+
   return (
     <div
-      className="w-screen h-screen overflow-hidden bg-gradient-to-br from-[#C6B38E] to-[#9A9B73]">
+      className="w-screen h-screen overflow-hidden bg-gradient-to-l from-[#30cfd0] to-[#330867]">
     <div
       className="w-screen">
         <div
@@ -54,7 +57,7 @@ const Profile = () => {
                 <div
                   className="flex space-x-1 group">
                   <p
-                    className="text-3xl text-[#454851]">{userDetails?.userName}</p>
+                    className="text-3xl text-white">{userDetails?.userName}</p>
                     <button
                         onClick={ProfileEdit}
                         className="bg-blue-400 hover:bg-blue-500 active:bg-blue-300 text-white w-10 h-10 rounded transition opacity-0 group-hover:opacity-100">
@@ -70,7 +73,7 @@ const Profile = () => {
               className="w-1/5 flex group space-x-3"
               >
               <pre
-                className={`${userDetails?.bio.trim().length === 0? "text-gray-700": "text-black"}`}>{userDetails?.bio.trim().length === 0? "Tell about your self...": userDetails?.bio}</pre>
+                className={`${userDetails?.bio.trim().length === 0? "text-gray-700": "text-white"}`}>{userDetails?.bio.trim().length === 0? "Tell about your self...": userDetails?.bio}</pre>
               <button
                 onClick={ProfileEdit}
                 className="bg-blue-400 hover:bg-blue-500 active:bg-blue-300 text-white w-10 h-10 rounded transition opacity-0 group-hover:opacity-100">
@@ -82,7 +85,7 @@ const Profile = () => {
           <div
             className="w-1/5 mt-10">
               <p
-                className="text-2xl text-[#454851]">{chats?.length? "Chats: ": 'No chats'} </p>
+                className="text-2xl text-white">{chats?.length? "Chats: ": 'No chats'} </p>
           </div>
         </div>
         <div

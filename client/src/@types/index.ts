@@ -18,14 +18,24 @@ export type ParticipantType = {
     bio: string
 }
 
+export type GroupType = {
+    groupName: string,
+    bio: string,
+    profilePicURL: string,
+    isAdmin: boolean
+}
+
 export type ContactType = {
     _id: string, 
     type: string
+    groupId: string
     updatedTimestamp: string
     messages: string[]
     participants: ParticipantType[]
-    lastMessage: {sender: string, content: string}
-}
+    lastMessage: {sender: string, content: string},
+    groupDetails: GroupType,
+    bio: string
+}   
 
 export type JoinRoomType = {
     senderId: string,

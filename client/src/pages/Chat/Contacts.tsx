@@ -33,7 +33,7 @@ const Contacts = ( { contacts , userId, lastMessage , profilePicURL }: PropType 
   return (
     <div
         onClick={selectContact}
-        className="w-full h-20 border flex hover:bg-gray-50 active:bg-gray-100 transition"
+        className="w-full h-20 border flex hover:bg-white/30 active:bg-gray-100 transition"
         >
             <div
                 className="h-full w-1/5 flex justify-center items-center"

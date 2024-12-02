@@ -32,12 +32,20 @@ io.on("connection", (socket) => {
     })
 
     socket.on('typing', (msg) => {
-        console.log(msg);
         socket.to(msg.chatId).emit('typing listener', msg);  
     })
     
     socket.on('receive request', (msg) => {
-        console.log(msg);
         socket.to(msg).emit('receive request response');
+    })
+
+    socket.on('leave room', (chatId) => {
+        console.log("chatId: ", chatId);
+        socket.leave(chatId);
+    })
+
+    socket.on('delete chat', (chatId) => {
+        console.log('Deleted chat Id: ', chatId);
+        socket.to(chatId).emit('delete chat listener');
     })
 })

@@ -92,7 +92,7 @@
   animation-delay: 2s;
 }
 
-#request-dialog, #chat-body, #profile-chatusers{
+#request-dialog, #chat-body, #profile-chatusers, #newgroup-participants, .adjusted-scrollbar{
   scrollbar-width: none;
   scroll-behavior: smooth;
 }

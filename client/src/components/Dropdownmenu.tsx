@@ -12,7 +12,7 @@ import {
   import { useCookies } from "react-cookie";
   import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/hooks/reduxHooks";
-import { popAddModal, popRequestModal, setRequests } from "@/redux/slices/chatSlice";
+import { popRequestModal, setRequests } from "@/redux/slices/chatSlice";
 import { getRequest } from "@/services/api/chats/getRequest";
 
 const Dropdownmenu = () => {
@@ -35,10 +35,7 @@ const Dropdownmenu = () => {
                     dispatch(setRequests(request))
                   }}
                     >Requests</DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => dispatch(popAddModal(true))}>
-                    Add Friend
-                  </DropdownMenuItem>
+                  
                   <DropdownMenuItem
                     onClick={() =>{logout(navigate, removeCookie)}}
                     >Logout</DropdownMenuItem>

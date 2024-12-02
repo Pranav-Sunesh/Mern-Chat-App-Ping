@@ -7,7 +7,8 @@ import { setChats, setRequests } from "@/redux/slices/chatSlice";
 import { useToast } from "@/hooks/use-toast";
 import { getChats } from "@/services/api/chats/getChats";
 import { deleteRequest } from "@/services/api/chats/deleteRequest";
-import { receiveRequest } from "@/services/socket/socket";
+import { joinRoom, receiveRequest } from "@/services/socket/socket";
+import { getChatIdArray } from "@/utils/chats/getChatIdArray";
 
 
 const Requestsection = ({ requester }: {requester: RequestSectionType}) => {
@@ -20,9 +21,11 @@ const Requestsection = ({ requester }: {requester: RequestSectionType}) => {
         await acceptRequest(username, requester.username, toast);
         const requests: RequestSectionType[] | [] = await getRequest(username);
         const chats: ContactType[] | [] = await getChats(username);
+        const chatsIdArray = getChatIdArray(chats);
         dispatch(setRequests(requests));
         dispatch(setChats(chats));
         receiveRequest(requester._id);
+        joinRoom(chatsIdArray);
     }
     const rejectButtonClick = async() => {
       const username = localStorage.getItem('username')!;
