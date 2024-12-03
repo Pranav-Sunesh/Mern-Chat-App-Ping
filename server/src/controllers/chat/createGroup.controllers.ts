@@ -39,7 +39,7 @@ export const createGroup = async(req: Request, res: Response) =>{
             lastMessage: {},
             updatedTimestamp: new Date().toString()            
         })
-        res.status(200).json('Group created');
+        res.status(200).json({data: 'Group created', chatId: createChat.insertedId});
 
     }catch(error){
         console.log(error);

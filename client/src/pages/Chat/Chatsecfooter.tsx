@@ -25,7 +25,6 @@ const Chatsecfooter = () => {
       dispatch(updateTimestamp({ chatId: selectedChat?._id!, timestamp: timestamp }));
       dispatch(sortChats());
       dispatch(updateLastMessage({chatId: selectedChat?._id!, lastMessage: {content: messageInput, sender: localStorage.getItem('username')!}}));
-      console.log("Message Length: ", messageInput.length);
       sendMessage( selectedChat?._id!, userDetails?._id!, userName, messageInput, timestamp);
     }
   }
@@ -48,13 +47,10 @@ const Chatsecfooter = () => {
     }
   } 
 
-  useEffect(() => {
-    console.log(isTyping);
-  }, [isTyping]);
-
 
   return (
     <div
+        id="chat-footer"
         className="w-full h-[10%] "
         >
             <form 
@@ -62,7 +58,7 @@ const Chatsecfooter = () => {
                 className="w-full h-full flex justify-center items-center space-x-2"
                 >
                 <Input 
-                  className="w-1/2"
+                  className="w-1/2 bg-white"
                   placeholder="Message"
                   value={messageInput}
                   onChange={handleChange} />

@@ -62,7 +62,7 @@ export const chatSlice = createSlice({
         setMessages: (state, action: PayloadAction<string[] | [] | null>) => {
             state.messages = action.payload;
         },
-        setSelectedChat: (state, action: PayloadAction<ContactType>) => {
+        setSelectedChat: (state, action: PayloadAction<ContactType | null>) => {
             state.selectedChat = action.payload;
         },
         setNewMessage: (state, action: PayloadAction<any>) => {

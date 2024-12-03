@@ -39,7 +39,7 @@ const Contactsec = () => {
         deleteChatListener(async() => {
           const chats = await getChats(localStorage.getItem('username'));
           dispatch(setChats(chats));
-          dispatch(sortChats());
+          dispatch(sortChats()); 
         })
       }
       asyncFunction();
@@ -49,10 +49,10 @@ const Contactsec = () => {
     
   return (
     <div 
-        className="bg-gradient-to-t from-[#a1c4fd] to-[#c2e9fb] w-1/4 h-[95%] rounded shadow"
+        className="bg-gradient-to-t from-[#a1c4fd] to-[#c2e9fb] md:w-[30%] lg:w-1/4 sm:w-[30%] h-[95%] rounded shadow"
         >
             <div
-                className="w-full h-[10%] flex justify-center items-center space-x-2"
+                className="w-full h-[10%] flex justify-center items-center md:space-x-1 sm:space-x-1 lg:space-x-2"
                 >
                     <Input 
                       placeholder="Search" 

@@ -16,7 +16,6 @@ const Protected = () => {
         const response = await axios.get('http://localhost:5000/auth/isAuth', {
           headers: {Authorization: `Bearer ${token}`}
         });
-        console.log(response.data.auth);
         setIsAuth(response.data.auth)
       
       }else{

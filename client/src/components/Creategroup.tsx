@@ -10,7 +10,7 @@ import { createGroup } from "@/services/api/chats/createGroup";
 import { useToast } from "@/hooks/use-toast";
 import { setChats, setGroupModal, sortChats } from "@/redux/slices/chatSlice";
 import { getChats } from "@/services/api/chats/getChats";
-import { receiveRequest } from "@/services/socket/socket";
+import { joinRoom, receiveRequest } from "@/services/socket/socket";
 
 const Creategroup = ({img}: {img: File | null}) => {
 
@@ -46,6 +46,7 @@ const Creategroup = ({img}: {img: File | null}) => {
                 title: response.data,
                 variant: response.variant
             })
+            joinRoom(response.chatId);
             const chats = await getChats(localStorage.getItem('username')!);
             dispatch(setChats(chats));
             setLoading(false);

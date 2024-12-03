@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 import { useEffect } from "react";
 import { getUser } from "@/services/api/chats/getUser";
 import { useAppDispatch,  } from "@/hooks/reduxHooks";
-import { setMessages, setUserDetails,  } from "@/redux/slices/chatSlice";
+import { setMessages, setSelectedChat, setUserDetails,  } from "@/redux/slices/chatSlice";
 import { joinRoom } from "@/services/socket/socket";
 
 
@@ -23,6 +23,7 @@ const Chat = () => {
         addEventListener("keydown", (e) => {
           if(e.key === 'Escape'){
             dispatch(setMessages(null));
+            dispatch(setSelectedChat(null));
           }
         })
 

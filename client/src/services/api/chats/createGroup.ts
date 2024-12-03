@@ -2,7 +2,8 @@ import axios, { AxiosError, AxiosResponse } from "axios"
 
 interface ReturnType{
     data: string,
-    variant: 'default' | 'destructive'
+    variant: 'default' | 'destructive',
+    chatId: string
 }
 
 export const createGroup = async(img: File | null, participants: string[], name: string, bio: string): Promise<ReturnType> => {
@@ -19,15 +20,17 @@ export const createGroup = async(img: File | null, participants: string[], name:
             }
         });
         return {
-            data: response.data,
-            variant: "default"
+            data: response.data.data,
+            variant: "default", 
+            chatId: response.data.chatId
         }
     } catch (error) {
         console.log(error);
         const axiosError = error as AxiosError;
         return {
             data: axiosError.response?.data as string,
-            variant: "destructive"
+            variant: "destructive",
+            chatId: ""
         }
     }
 }

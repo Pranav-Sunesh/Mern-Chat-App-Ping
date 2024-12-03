@@ -17,7 +17,7 @@ const AddDropdown = () => {
   return (
     <DropdownMenu>
     <DropdownMenuTrigger
-        className="w-10 h-10 rounded-full bg-white hover:bg-gray-50 focus:outline-none">
+        className="lg:w-10 lg:h-10 md:w-9 md:h-9 sm:w-9 sm:h-9 rounded-full bg-white hover:bg-gray-50 focus:outline-none">
         <i className="fa-solid fa-plus"></i>
     </DropdownMenuTrigger>
     <DropdownMenuContent>

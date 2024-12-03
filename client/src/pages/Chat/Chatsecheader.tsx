@@ -47,7 +47,6 @@ const Chatsecheader = () => {
 
   useEffect(() => {
     selectedChatRef.current = selectedChat?._id!;
-    console.log("selectedChat: ", selectedChat);
   }, [selectedChat?._id]);
 
   const deleteGroup = async() => {
@@ -67,7 +66,8 @@ const Chatsecheader = () => {
 
   return (
     <div
-      className="w-full h-[15%] bg-gradient-to-r from-[#cfd9df] to-[#e2ebf0] rounded-t-md flex items-center"
+      id="chat-header"
+      className="w-full h-[11%] bg-white rounded-t-md flex items-center"
       >
         <Dialog
           open={popModal} onOpenChange={isOpen => setPopModal(isOpen)}>
@@ -92,8 +92,13 @@ const Chatsecheader = () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle
-                className="text-2xl">
+                className="text-2xl flex space-x-3 items-center">
+                  <div>
+                    {selectedChat?.type === 'group' && <Profilepic profilePicURL={selectedChat.groupDetails.profilePicURL} width="20" height="20"/>}
+                  </div>
+                  <div>
                   {selectedChat?.type === 'personal'? selectedChat.participants[0].name : selectedChat?.groupDetails.groupName}
+                  </div>
                 </DialogTitle>
               <DialogDescription
                 className="space-y-5">

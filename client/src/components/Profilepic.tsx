@@ -10,7 +10,7 @@ interface ProfilePicType{
 const Profilepic = ( { profilePicURL , width, height }: ProfilePicType ) => {
   return (
         <Avatar
-          className={`w-${width} h-${height}`}> 
+          className={`w-${width} h-${height} `}> 
             <AvatarImage src={profilePicURL? profilePicURL: pfp} />
             <AvatarFallback>pfp</AvatarFallback>
         </Avatar>

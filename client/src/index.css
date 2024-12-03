@@ -97,3 +97,11 @@
   scroll-behavior: smooth;
 }
 
+#chat-body, #chat-footer{
+  background-image: url('C:\Users\prana\OneDrive\Desktop\Ping\client\public\3237018763b5c1c722ce23d174914e35.jpg');
+}
+
+#chat-sec{
+  background-image: url('C:\Users\prana\OneDrive\Desktop\Ping\client\public\chatsecbg.jpg');
+}
+

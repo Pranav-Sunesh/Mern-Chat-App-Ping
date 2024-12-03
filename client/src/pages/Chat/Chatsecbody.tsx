@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHooks";
-import { setIsTyping, setNewMessage, sortChats, updateLastMessage, updateTimestamp } from "@/redux/slices/chatSlice";
-import { socketReceiveMessage } from "@/services/socket/socket";
+import { setIsTyping, setNewMessage, setSelectedChat, sortChats, updateLastMessage, updateTimestamp } from "@/redux/slices/chatSlice";
+import { initializeSocket, removeSocketReceiveMessage, socketClose, socketReceiveMessage } from "@/services/socket/socket";
 import { useEffect, useRef } from "react";
 
 const Chatsecbody = () => {
@@ -25,20 +25,6 @@ const Chatsecbody = () => {
       selectedChatRef.current = selectedChat?._id!
     }, [selectedChat]); 
 
-    useEffect(() => {
-      const callback = ({chatId, content, sender, timestamp }: any) => {
-        dispatch(setIsTyping(false));
-        if(selectedChatRef.current === chatId){
-          dispatch(setNewMessage( {senderUserName: sender, content: content, timestamp: timestamp} ));
-          dispatch(updateTimestamp({chatId: chatId, timestamp: timestamp }));
-          dispatch(updateLastMessage({chatId: chatId, lastMessage: {sender: sender, content: content} }));
-        }
-        dispatch(sortChats());
-      }
-
-      socketReceiveMessage(callback);
-    }, [])
-
 
 
     
@@ -47,7 +33,7 @@ const Chatsecbody = () => {
         onClick={scrollToBottom}
         ref={chatBodyRef}
         id="chat-body"
-        className="w-full h-[75%] flex-col-reverse space-y-6 overflow-y-scroll"
+        className="w-full h-[79%] flex-col-reverse space-y-6 overflow-y-scroll"
         >
             {messages.map((message: any, index: number) => (
                 <div 
